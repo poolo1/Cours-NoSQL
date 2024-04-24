@@ -1,1 +1,26 @@
+import sqlite3
+import pandas as pd
 
+# Connexion à la base de données SQLite (crée un fichier 'exercice.db' s'il n'existe pas)
+conn = sqlite3.connect('exercice.db')
+
+# Lire le fichier CSV
+df = pd.read_csv('bc.csv')
+
+# Charger les données dans une table SQLite appelée 'bc_table'
+df.to_sql('bc_table', conn, if_exists='replace', index=False)
+
+# Obtenir le nombre de lignes et de colonnes dans la table
+cursor = conn.cursor()
+cursor.execute('SELECT COUNT(*) FROM bc_table;')
+num_rows = cursor.fetchone()[0]  # Nombre de lignes
+
+cursor.execute('PRAGMA table_info(bc_table);')
+num_columns = len(cursor.fetchall())  # Nombre de colonnes
+
+# Fermer la connexion
+conn.close()
+
+# Afficher le nombre de lignes et de colonnes
+print("Nombre de lignes dans 'bc_table':", num_rows)
+print("Nombre de colonnes dans 'bc_table':", num_columns)
