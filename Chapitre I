@@ -1,8 +1,10 @@
+Question 1
+
 import sqlite3
 import pandas as pd
 
 # Connexion à la base de données SQLite (crée un fichier 'exercice.db' s'il n'existe pas)
-conn = sqlite3.connect('exercice.db')
+conn = sqlite3.connect('exercice_bc.db')
 
 # Lire le fichier CSV
 df = pd.read_csv('bc.csv')
@@ -24,3 +26,25 @@ conn.close()
 # Afficher le nombre de lignes et de colonnes
 print("Nombre de lignes dans 'bc_table':", num_rows)
 print("Nombre de colonnes dans 'bc_table':", num_columns)
+
+
+Question 2
+
+import sqlite3
+import pandas as pd
+
+# Lire le fichier CSV dans un DataFrame
+df = pd.read_csv('/Users/polo11/Downloads/bc.csv')
+
+# Connexion à la base de données SQLite
+conn = sqlite3.connect('exercice_bc.db')
+
+# Insérer les données du DataFrame dans une table nommée 'bc_table'
+df.to_sql('bc_table', conn, if_exists='replace', index=False)
+
+# Fermer la connexion
+conn.close()
+
+
+##Question 3##
+
